@@ -1,23 +1,27 @@
 {
-  "name": "node-workshop",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Samadmemon991/Node-workshop.git"
-  },
-  "keywords": [
-    "node",
-    "learning"
-  ],
-  "author": "samadmemon991",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Samadmemon991/Node-workshop/issues"
-  },
-  "homepage": "https://github.com/Samadmemon991/Node-workshop#readme"
+    "name": "node-workshop",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "watch": "nodemon src/http-server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Samadmemon991/Node-workshop.git"
+    },
+    "keywords": [
+        "node",
+        "learning"
+    ],
+    "author": "samadmemon991",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Samadmemon991/Node-workshop/issues"
+    },
+    "homepage": "https://github.com/Samadmemon991/Node-workshop#readme",
+    "dependencies": {
+        "nodemon": "^3.0.1"
+    }
 }
