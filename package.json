@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "watch": "nodemon src/http-server",
+        "start": "nodemon src/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -22,6 +23,7 @@
     },
     "homepage": "https://github.com/Samadmemon991/Node-workshop#readme",
     "dependencies": {
+        "express": "^4.18.2",
         "nodemon": "^3.0.1"
     }
 }
