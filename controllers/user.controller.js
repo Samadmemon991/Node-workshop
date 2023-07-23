@@ -13,7 +13,11 @@ async function getUser(req, res) {
     try {
         id = req.params.id
         const data = await User.findById(id, "userName");
-        res.send(data);
+        if (!data) {
+            res.send("User not found");
+        } else {
+            res.send(data);
+        }
     } catch (err) {
         console.log(err);
         res.send("Something went wrong");
@@ -27,7 +31,7 @@ async function createUser(req, res) {
         res.send("New user created with id:" + data._id);
     } catch (err) {
         console.log(err);
-        res.send("Something went wrong");
+        res.send(err._message);
     }
 }
 
