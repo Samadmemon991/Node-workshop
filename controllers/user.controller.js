@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-
+const { generateToken, verifyToken } = require("../middlware/auth")
 async function getUsers(req, res) {
     try {
         const data = await User.find({}, "userName");
@@ -66,4 +66,18 @@ async function updateUser(req, res) {
     }
 }
 
-module.exports = { getUsers, getUser, createUser, updateUser, deleteUser }
+async function userLogin(req, res) {
+    userData = req.body
+    try {
+        const data = await User.exists({ userName: userData.client_id, password: userData.client_secret });
+        if (data) {
+            res.send(generateToken(data));
+        } else {
+            res.send("Invalid username or password.");
+        }
+    } catch (err) {
+        console.log(err);
+        res.send("Something went wrong");
+    }
+}
+module.exports = { getUsers, getUser, createUser, deleteUser, updateUser, userLogin }
