@@ -1,5 +1,4 @@
 var express = require('express');
-const Product = require('../models/product.model');
 const { getProducts, createProduct, updateProduct, deleteProduct } = require('../controllers/product.controller');
 var router = express.Router();
 const { adminCheckMiddleware } = require('../middlware/auth');
