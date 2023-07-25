@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/user', authMiddleware, usersRouter);
 app.use('/product', authMiddleware, productsRouter);
-app.use('/category', categoriesRouter);
+app.use('/category', authMiddleware, categoriesRouter);
 
 dbConnect();
 
