@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const Category = require("../models/category.model");
 
 async function getProducts(req, res) {
     try {
@@ -51,4 +52,84 @@ async function updateProduct(req, res) {
         res.send("Something went wrong");
     }
 }
-module.exports = { getProducts, createProduct, deleteProduct, updateProduct }
+
+async function searchProduct(req, res) {
+    const productData = req.body;
+    const searchData = {};
+
+    if (productData.title) {
+        searchData.title = productData.title;
+    }
+    if (productData.description) {
+        searchData.description = productData.description;
+    }
+
+    if (productData.category) {
+        try {
+            const categoryId = await getCategoryId(productData.category);
+            if (categoryId) {
+                searchData.category = categoryId;
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(err.message);
+            return;
+        }
+    }
+
+    if (Object.keys(searchData).length === 0) {
+        res.send("Please enter product details to search for products.");
+        return;
+    }
+    try {
+        const data = await Product.find(searchData);
+        if (data !== undefined && data.length != 0) {
+            for (product of data) {
+                if (product.category) {
+                    const categoryName = await getCategoryName(product.category);
+                    console.log(categoryName);
+                    product.category = categoryName;
+                    console.log(product.category);
+                }
+            }
+
+            res.send(data);
+        } else {
+            res.send("No Product(s) match your search criteria.")
+        }
+    } catch (err) {
+        console.log(err);
+        res.send(err.message);
+    }
+}
+
+async function getCategoryName(categoryId) {
+    try {
+        const category = await Category.findById(categoryId);
+        if (category) {
+            return category.category_name;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error while fetching category name.");
+    }
+}
+
+async function getCategoryId(categoryName) {
+    try {
+        const category = await Category.findOne({ category_name: categoryName });
+        if (category) {
+            return category._id;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error while fetching category ID.");
+    }
+}
+
+
+module.exports = { getProducts, createProduct, deleteProduct, updateProduct, searchProduct }
