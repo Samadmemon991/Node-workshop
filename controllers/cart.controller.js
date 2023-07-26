@@ -19,7 +19,7 @@ async function createCart(req, res) {
         res.send("New cart created with id:" + data._id);
     } catch (err) {
         console.log(err);
-        res.send(err._message);
+        res.status(500).send(err.message);
     }
 }
 

@@ -8,7 +8,13 @@ const cartSchema = mongoose.Schema({
         },
         quantity: {
             type: Number,
-            required: true
+            required: true,
+            validate: {
+                validator: function(value) {
+                    return value >= 1;
+                },
+                message: 'Quantity must be equal to or greater than 1.'
+            }
         }
     }]
 });
