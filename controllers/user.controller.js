@@ -98,4 +98,16 @@ async function userLogin(req, res) {
         res.send("Something went wrong");
     }
 }
-module.exports = { getUsers, getUser, createUser, deleteUser, updateUser, userLogin }
+
+async function getUserFromToken(req, res) {
+    const token = req.header('Authorization');
+    if (token && token.startsWith('Bearer ')) {
+        const authToken = token.replace('Bearer ', '');
+        tokenData = verifyToken(authToken);
+        user = await User.findById(tokenData._id);
+
+        return user
+    }
+}
+
+module.exports = { getUsers, getUser, createUser, deleteUser, updateUser, userLogin, getUserFromToken }
