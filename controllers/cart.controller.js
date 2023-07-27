@@ -3,8 +3,20 @@ const Product = require("../models/product.model");
 
 async function getCart(req, res) {
     try {
-        const data = await Cart.find();
-        res.send(data);
+        const data = await Cart.find().lean();
+        if (data !== undefined && data.length != 0) {
+            for (cart of data) {
+                for (cartProducts of cart.cartProducts) {
+                    if (cartProducts.productId) {
+                        const productName = await getProductName(cartProducts.productId);
+                        cartProducts.productId = productName;
+                    }
+                }
+            }
+            res.send(data);
+        } else {
+            res.send("Sorry no Products found");
+        }
     } catch (err) {
         console.log(err);
         res.send("Something went wrong");
@@ -73,6 +85,21 @@ async function validateProducts(cartData) {
         console.error('Error validating products:', error.message);
     }
 }
+
+async function getProductName(productId) {
+    try {
+        const product = await Product.findById(productId);
+        if (product) {
+            return product.title;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error while fetching Product name.");
+    }
+}
+
 
 
 module.exports = { getCart, createCart, deleteCart, updateCart }

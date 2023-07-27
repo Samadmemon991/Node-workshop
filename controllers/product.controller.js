@@ -3,8 +3,18 @@ const Category = require("../models/category.model");
 
 async function getProducts(req, res) {
     try {
-        const data = await Product.find();
-        res.send(data);
+        const data = await Product.find().lean();
+        if (data !== undefined && data.length != 0) {
+            for (product of data) {
+                if (product.category) {
+                    const categoryName = await getCategoryName(product.category);
+                    product.category = categoryName;
+                }
+            }
+            res.send(data);
+        } else {
+            res.send("Sorry no Products found");
+        }
     } catch (err) {
         console.log(err);
         res.send("Something went wrong");
@@ -82,17 +92,14 @@ async function searchProduct(req, res) {
         return;
     }
     try {
-        const data = await Product.find(searchData);
+        const data = await Product.find(searchData).lean();
         if (data !== undefined && data.length != 0) {
             for (product of data) {
                 if (product.category) {
                     const categoryName = await getCategoryName(product.category);
-                    console.log(categoryName);
                     product.category = categoryName;
-                    console.log(product.category);
                 }
             }
-
             res.send(data);
         } else {
             res.send("No Product(s) match your search criteria.")
