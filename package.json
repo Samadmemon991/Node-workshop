@@ -1,27 +1,25 @@
 {
     "name": "node-workshop",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "version": "0.0.0",
+    "private": true,
     "scripts": {
-        "watch": "nodemon src/http-server",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "nodemon ./bin/www",
+        "lint": "eslint ."
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Samadmemon991/Node-workshop.git"
-    },
-    "keywords": [
-        "node",
-        "learning"
-    ],
-    "author": "samadmemon991",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Samadmemon991/Node-workshop/issues"
-    },
-    "homepage": "https://github.com/Samadmemon991/Node-workshop#readme",
     "dependencies": {
-        "nodemon": "^3.0.1"
+        "cookie-parser": "~1.4.6",
+        "debug": "~4.3.4",
+        "dotenv": "^16.3.1",
+        "express": "~4.18.2",
+        "jsonwebtoken": "^9.0.1",
+        "mongoose": "^7.4.0",
+        "morgan": "~1.10.0",
+        "nodemailer": "^6.9.4"
+    },
+    "devDependencies": {
+        "eslint": "^8.45.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.27.5",
+        "husky": "^8.0.3"
     }
 }
