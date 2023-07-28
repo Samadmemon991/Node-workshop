@@ -12,7 +12,7 @@ async function getCart(req, res) {
                 for (const cartProducts of cart.cartProducts) {
                     if (cartProducts.productId) {
                         const productName = await getProductName(cartProducts.productId);
-                        cartProducts.productId = productName;
+                        cartProducts.productName = productName;
                     }
                 }
             }
